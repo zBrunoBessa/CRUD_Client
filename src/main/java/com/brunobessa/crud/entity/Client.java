@@ -2,7 +2,6 @@ package com.brunobessa.crud.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,16 +13,16 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String CPF;
+    private String cpf;
     private Double income;
     private LocalDate birthDate;
     private Integer children;
 
     public Client(){}
-    public Client(Long id, String name, String CPF, Double income, LocalDate birthDate, Integer children) {
+    public Client(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.id = id;
         this.name = name;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
@@ -45,12 +44,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Double getIncome() {
