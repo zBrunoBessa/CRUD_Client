@@ -3,11 +3,14 @@ package com.brunobessa.crud.service;
 import com.brunobessa.crud.dto.ClientDTO;
 import com.brunobessa.crud.entity.Client;
 import com.brunobessa.crud.repositories.ClientRepository;
+import com.brunobessa.crud.service.exceptions.DatabaseException;
 import com.brunobessa.crud.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -43,9 +46,17 @@ public class ClientService {
         return new ClientDTO(entity);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-        repository.deleteById(id);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try {
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Falha de integridade referencial");
+        }
     }
 
     private void CopyDtoToEntity(ClientDTO dto, Client entity) {
