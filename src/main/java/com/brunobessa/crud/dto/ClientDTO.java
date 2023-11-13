@@ -1,14 +1,18 @@
 package com.brunobessa.crud.dto;
 
 import com.brunobessa.crud.entity.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
 public class ClientDTO {
     private Long id;
+    @NotBlank(message = "Campo requerido")
     private String name;
     private String cpf;
     private Double income;
+    @PastOrPresent(message = "Coloque uma data valida")
     private LocalDate birthDate;
     private Integer children;
 
